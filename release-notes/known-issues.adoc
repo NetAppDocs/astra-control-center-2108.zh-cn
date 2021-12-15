@@ -1,0 +1,315 @@
+---
+sidebar: sidebar 
+permalink: release-notes/known-issues.html 
+keywords: astra, control center, bugs, known issues, problems 
+summary: 已知问题可确定可能妨碍您成功使用此版本产品的问题。 
+---
+= 此版本的已知问题
+:hardbreaks:
+:icons: font
+:imagesdir: ../media/release-notes/
+
+
+已知问题可确定可能妨碍您成功使用此版本产品的问题。
+
+以下已知问题会影响当前版本：
+
+* <<Incorrect ClusterRoleBinding created by Astra Control Center CRD during installation>>
+* <<App with user-defined label goes into "removed" state>>
+* <<Unable to stop running app backup>>
+* <<Backup or clone fails for apps using PVCs with decimal units in Astra Control Center>>
+* <<Astra Control Center UI slow to show changes to app resources such as persistent volume changes>>
+* <<During app restore from backup Trident creates a larger PV than the original PV>>
+* <<Clone performance impacted by large persistent volumes>>
+* <<App clones fail using a specific version of PostgreSQL>>
+* <<App clones fail when using Service Account level OCP Security Context Constraints (SCC)>>
+* <<S3 buckets in Astra Control Center do not report available capacity>>
+* <<Reusing buckets between instances of Astra Control Center causes failures>>
+* <<Selecting a bucket provider type with credentials for another type causes data protection failures>>
+* <<Backups and snapshots might not be retained during removal of an Astra Control Center instance>>
+* <<Extra backups are retained as part of scheduled backup>>
+* link:known-issues.html#clone-operation-cant-use-other-buckets-besides-the-default["克隆操作不能使用默认值以外的其他分段"]
+* <<Managing a cluster with Astra Control Center fails when default kubeconfig file contains more than one context>>
+* link:known-issues.html#cant-determine-asup-tar-bundle-status-in-scaled-environment["无法确定扩展环境中的 ASUP tar 包状态"]
+* <<Uninstall of Astra Control Center fails to clean up the monitoring-operator pod on the managed cluster>>
+* <<Uninstall of Astra Control Center fails to clean up Traefik CRDs>>
+* <<ASUP collection stuck in a generating or uploading state>>
+
+
+
+
+== 在安装期间， Astra 控制中心 CRD 创建的 ClusterRoleBinding.
+
+将以下修补程序应用于已部署了 Acc-operator 21.08.65 版的所有 Kubernetes 集群。如果重新部署了 Acc-operator ，则也应应用此功能。
+
+要解决此问题描述，请执行以下操作：
+
+. 将以下脚本中的 `Acc_namespace` 替换为您以前使用的命名空间 link:../get-started/install_acc.html#install-astra-control-center["部署 Astra 控制中心"]。
++
+[source, cli]
+----
+cat <<EOF | kubectl apply -f –
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: acc-operator-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: acc-operator-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: netapp-acc-operator
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts:ACC_NAMESPACE
+EOF
+----
+. 运行脚本。
+
+
+此修补程序将从 `ClusterRoleBinding."Acc-operator-manager-rolebind"` 中删除以下两个主题
+
+[listing]
+----
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+- apiGroup: ""
+  kind: Group
+  name: system:serviceaccounts
+----
+
+
+== 具有用户定义标签的应用程序将进入 " 已删除 " 状态
+
+如果您定义的应用程序标签不存在，则 Astra 控制中心将创建，管理该应用程序，然后立即将其删除。要避免这种情况，请在应用程序由 Astra 控制中心管理后，将 K8s 标签添加到 Pod 和资源中。
+
+
+
+== 无法停止运行应用程序备份
+
+无法停止正在运行的备份。如果需要删除备份，请等待备份完成，然后按照中的说明进行操作 link:../use/protect-apps.html#delete-backups["删除备份"]。要删除失败的备份，请使用 link:https://docs.netapp.com/us-en/astra-automation-2108/index.html["Astra API"^]。
+
+
+
+== 在 Astra 控制中心中，使用具有小数单位的 PVC 的应用程序的备份或克隆失败
+
+使用十进制单位创建的卷将使用 Astra 控制中心备份或克隆过程失败。请参见 link:https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Astra/Backup_or_clone_may_fail_for_applications_using_PVCs_with_decimal_units_in_Astra_Control_Center["知识库文章"] 有关详细信息 ...
+
+
+
+== Astra 控制中心 UI 显示应用程序资源更改（如永久性卷更改）的速度较慢
+
+在执行数据保护操作（克隆，备份，还原）并随后调整永久性卷大小后，在 UI 中显示新卷大小之前，最长会有 20 分钟的延迟。添加或修改任何应用程序资源时， UI 也会出现此延迟。在这种情况下，数据保护操作将在几分钟内成功完成，您可以使用存储后端的管理软件确认卷大小的更改。
+
+
+
+== 在从备份中还原应用程序期间， Trident 会创建比原始 PV 更大的 PV
+
+如果在创建备份后调整永久性卷的大小，然后从该备份还原，则此永久性卷的大小将与 PV 的新大小匹配，而不是使用备份的大小。
+
+
+
+== 克隆性能受大型永久性卷影响
+
+非常大且已使用的永久性卷的克隆可能会间歇性地速度较慢，具体取决于集群对对象存储的访问权限。如果克隆挂起且未复制任何数据超过 30 分钟，则 Astra Control 将终止克隆操作。
+
+
+
+== 使用特定版本的 PostgreSQL 时应用程序克隆失败
+
+使用 BitNami PostgreSQL 11.5.0 图表时，同一集群中的应用程序克隆始终会失败。要成功克隆，请使用图表的早期或更高版本。
+
+
+
+== 使用服务帐户级别 OCP 安全上下文限制（ SCC ）时应用程序克隆失败
+
+如果在 OCP 集群的命名空间中的服务帐户级别配置了原始安全上下文约束，则应用程序克隆可能会失败。如果应用程序克隆失败，它将显示在 Astra 控制中心的受管应用程序区域中，状态为 `removed` 。请参见 https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Astra/Application_clone_is_failing_for_an_application_in_Astra_Control_Center["知识库文章"] 有关详细信息 ...
+
+
+
+== Astra 控制中心中的 S3 存储分段不会报告可用容量
+
+在备份或克隆由 Astra 控制中心管理的应用程序之前，请检查 ONTAP 或 StorageGRID 管理系统中的存储分段信息。
+
+
+
+== 在 Astra 控制中心实例之间重复使用存储分段会导致失败
+
+如果您尝试重复使用另一个或先前安装的 Astra Control Center 所使用的存储分段，则备份和还原将失败。您必须使用其他存储分段或彻底清理之前使用的存储分段。您不能在 Astra 控制中心的实例之间共享存储分段。
+
+
+
+== 如果选择包含另一种类型的凭据的存储分段提供程序类型，则会导致数据保护失败
+
+添加存储分段时，请选择正确的存储分段提供程序类型以及适用于该提供程序的凭据。例如，用户界面会接受 NetApp ONTAP S3 作为具有 StorageGRID 凭据的类型；但是，这将发生原因导致使用此存储分段执行所有未来应用程序备份和还原失败。
+
+
+
+== 删除 Astra Control Center 实例期间，备份和快照可能不会保留
+
+如果您拥有评估许可证，请务必存储帐户 ID ，以避免在未发送 ASUP 的情况下 Astra 控制中心出现故障时丢失数据。
+
+
+
+== 额外的备份会作为计划备份的一部分保留
+
+有时， Astra 控制中心中的一个或多个备份会保留到超出备份计划中指定保留的数量的位置。这些额外备份应作为计划备份的一部分删除，但不会删除，并且会停留在 `pending` 状态。要解决问题描述， https://docs.netapp.com/us-en/astra-automation-2108/workflows/wf_delete_backup.html["强制删除"] 额外的备份。
+
+
+
+== 克隆操作不能使用默认值以外的其他分段
+
+在应用程序备份或应用程序还原期间，您可以选择指定存储分段 ID 。但是，应用程序克隆操作始终使用已定义的默认分段。没有选项可用于更改克隆的分段。如果要控制使用哪个存储分段，您可以选择 link:../use/manage-buckets.html#edit-a-bucket["更改存储分段默认值"] 或者执行  后跟 A  请单独使用。
+
+
+
+== 如果默认的 kubeconfig 文件包含多个上下文，则使用 Astra 控制中心管理集群将失败
+
+不能将 kubeconfig 与多个集群和上下文结合使用。请参见 link:https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Astra/Managing_cluster_with_Astra_Control_Center_may_fail_when_using_default_kubeconfig_file_contains_more_than_one_context["知识库文章"] 有关详细信息 ...
+
+
+
+== 无法确定扩展环境中的 ASUP tar 包状态
+
+在 ASUP 收集期间， UI 中的捆绑包状态会报告为 `collecting` 或 `done` 。对于大型环境，收集可能需要长达一小时的时间。在 ASUP 下载期间，此捆绑包的网络文件传输速度可能不足，下载可能会在 15 分钟后超时，而 UI 中没有任何指示。下载问题取决于 ASUP 的大小，扩展的集群大小以及收集时间是否超过七天限制。
+
+
+
+== 卸载 Astra 控制中心无法清理受管集群上的监控操作员 POD
+
+如果在卸载 Astra Control Center 之前未取消管理集群，则可以使用以下命令手动删除 netapp-monitoring 命名空间和命名空间中的 Pod ：
+
+.步骤
+. 删除 `附件监控` 代理：
++
+[listing]
+----
+oc delete agents acc-monitoring -n netapp-monitoring
+----
++
+结果
+
++
+[listing]
+----
+agent.monitoring.netapp.com "acc-monitoring" deleted
+----
+. 删除命名空间：
++
+[listing]
+----
+oc delete ns netapp-monitoring
+----
++
+结果
+
++
+[listing]
+----
+namespace "netapp-monitoring" deleted
+----
+. 确认已删除资源：
++
+[listing]
+----
+oc get pods -n netapp-monitoring
+----
++
+结果
+
++
+[listing]
+----
+No resources found in netapp-monitoring namespace.
+----
+. 确认已删除监控代理：
++
+[listing]
+----
+oc get crd|grep agent
+----
++
+示例结果：
+
++
+[listing]
+----
+agents.monitoring.netapp.com                     2021-07-21T06:08:13Z
+----
+. 删除自定义资源定义（ CRD ）信息：
++
+[listing]
+----
+oc delete crds agents.monitoring.netapp.com
+----
++
+结果
+
++
+[listing]
+----
+customresourcedefinition.apiextensions.k8s.io "agents.monitoring.netapp.com" deleted
+----
+
+
+
+
+== 卸载 Astra 控制中心无法清理 Traefik CRD
+
+您可以手动删除 Traefik CRD ：
+
+.步骤
+. 确认卸载过程未删除哪些 CRD ：
++
+[listing]
+----
+kubectl get crds |grep -E 'traefik'
+----
++
+响应
+
++
+[listing]
+----
+ingressroutes.traefik.containo.us             2021-06-23T23:29:11Z
+ingressroutetcps.traefik.containo.us          2021-06-23T23:29:11Z
+ingressrouteudps.traefik.containo.us          2021-06-23T23:29:12Z
+middlewares.traefik.containo.us               2021-06-23T23:29:12Z
+serverstransports.traefik.containo.us         2021-06-23T23:29:13Z
+tlsoptions.traefik.containo.us                2021-06-23T23:29:13Z
+tlsstores.traefik.containo.us                 2021-06-23T23:29:14Z
+traefikservices.traefik.containo.us           2021-06-23T23:29:15Z
+----
+. 删除 CRD ：
++
+[listing]
+----
+kubectl delete crd ingressroutes.traefik.containo.us ingressroutetcps.traefik.containo.us ingressrouteudps.traefik.containo.us middlewares.traefik.containo.us serverstransports.traefik.containo.us tlsoptions.traefik.containo.us tlsstores.traefik.containo.us traefikservices.traefik.containo.us
+----
+
+
+
+
+== ASUP 收集停留在 " 正在生成 " 或 " 正在上传 " 状态
+
+如果 ASUP Pod 被终止或重新启动， ASUP 收集可能会停留在 " 正在生成 " 或 " 正在上传 " 状态。执行以下操作 link:https://docs.netapp.com/us-en/astra-automation-2108/index.html["Astra Control REST API"] 调用以重新启动手动收集：
+
+[cols="25,75"]
+|===
+| HTTP 方法 | 路径 
+
+
+| 发布 | /accounts/ ｛ accountID ｝ /core/v1/asups 
+|===
+
+NOTE: 只有在启动 ASUP 后 10 分钟以上执行此 API 临时解决策时，此 API 才起作用。
+
+
+
+== 了解更多信息
+
+* link:../release-notes/known-limitations.html["此版本的已知限制"]
+

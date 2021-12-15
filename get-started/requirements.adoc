@@ -1,0 +1,146 @@
+---
+sidebar: sidebar 
+permalink: get-started/requirements.html 
+keywords: what are astra kubernetes requirements, astra control requirements, astra supported versions, apps, supported apps, mariadb, mysql, postgres, kubernetes version, ubuntu, image type, networking 
+summary: 通过验证对 Kubernetes 集群，应用程序和 Web 浏览器的支持，开始使用 Astra 控制中心。 
+---
+= Astra 控制中心要求
+:hardbreaks:
+:icons: font
+:imagesdir: ../media/get-started/
+
+
+首先验证对 Kubernetes 集群，应用程序，许可证和 Web 浏览器的支持。
+
+
+
+== Kubernetes 集群的一般要求
+
+Kubernetes 集群必须满足以下一般要求，才能从 Astra 控制中心发现和管理它。
+
+* * 映像注册表 * ：您必须具有可将 Astra 控制中心构建映像推送到的现有私有 Docker 映像注册表。您必须具有要上传映像的映像注册表的 URL ，并且必须已为专用容器注册表的映像添加标记。
+* * Trident / ONTAP 存储配置 * ： Astra 控制中心要求已安装并配置 Trident 21.01 或 21.04 版，以便使用 NetApp ONTAP 9.5 或更高版本作为存储后端。Astra 控制中心要求创建一个存储类并将其设置为默认存储类。Astra 控制中心支持 Trident 提供的以下 ONTAP 驱动程序：
++
+** ontap-NAS
+** ontap-nas-flexgroup
+** ontap-san
+** ontap-san-economy.
+
+
+
+
+如果您计划从 Astra 控制中心管理 Kubernetes 集群，并使用该集群托管 Astra 控制中心安装，则该集群还需要满足以下附加要求：
+
+* Kubernetes 的最新版本 https://kubernetes-csi.github.io/docs/snapshot-controller.html["Snapshot 控制器组件"^] 已安装
+* Trident https://netapp-trident.readthedocs.io/en/latest/kubernetes/concepts/objects.html?highlight=VolumeSnapshotClass#kubernetes-volumesnapshotclass-objects["volumesnapshotclass 对象"^] 已由管理员定义
+* 集群上存在默认 Kubernetes 存储类
+* 至少将一个存储类配置为使用 Trident
+* 一种将 Astra 控制中心的 FQDN 指向 Astra 控制中心服务的外部 IP 地址的方法
+
+
+
+
+=== OpenShift 集群
+
+Astra 控制中心要求 Red Hat OpenShift 容器平台 4.6.8 或 4.7 集群具有由 ONTAP 9.5 或更高版本提供支持的 Trident 存储类，并具有以下属性：
+
+* 至少 300 GB 的可用 ONTAP 存储容量
+* 3 个控制器节点，每个节点具有 4 个 CPU 核， 16 GB RAM 和 120 GB 可用存储
+* 3 个工作节点，每个节点至少具有 12 个 CPU 核， 32 GB RAM 和 50 GB 可用存储
+* Kubernetes 1.19 或 1.20 版
+* 服务类型 "loadbalancer" 可用于将传入流量发送到 OpenShift 集群中的服务
+* 一种将 Astra 控制中心的 FQDN 指向负载平衡 IP 地址的方法
+
+
+
+NOTE: 这些最低要求假定 Astra 控制中心是 OpenShift 集群上运行的唯一应用程序。如果集群运行的是其他应用程序，则需要相应地调整这些最低要求。
+
+确保集群满足最低要求，并遵循 Kubernetes 最佳实践，以便 Astra 控制中心在 Kubernetes 集群中具有高可用性。
+
+
+NOTE: 不支持 OpenShift 4.8 。
+
+[NOTE]
+====
+在应用程序克隆期间， Astra 控制中心需要允许 OpenShift 挂载卷并更改文件所有权。因此，需要配置 ONTAP ，以便使用以下命令成功完成卷操作：
+
+. `export-policy rule modify -vserver svm0 -policyname default -ruleindex 1 -superuser sys`
+. `export-policy rule modify -policyname default -ruleindex 1 -anon 65534`
+
+
+====
+
+NOTE: 如果您计划将另一个 OpenShift 4.6 或 4.7 集群添加为托管计算资源，则需要确保已启用 Trident 卷快照功能。请参见官方 Trident https://netapp-trident.readthedocs.io/en/stable-v21.04/kubernetes/operations/tasks/volumes/snapshots.html?highlight=volumesnapshot#on-demand-volume-snapshots["说明"^] 使用 Trident 启用和测试卷快照。
+
+
+
+=== 应用程序管理要求
+
+Astra 控制中心具有以下应用程序管理要求：
+
+* * 许可 * ：要使用 Astra 控制中心管理应用程序，您需要一个 Astra 控制中心许可证。
+* * Helm 3* ：如果使用 Helm 部署应用程序，则 Astra 控制中心需要 Helm 版本 3 。完全支持管理和克隆使用 Helm 3 部署的应用程序（或从 Helm 2 升级到 Helm 3 ）。不支持使用 Helm 2 部署的应用程序。
+* * 操作员管理 * ： Astra 控制中心不支持使用启用了操作员生命周期管理器（ OLM ）的操作员或集群范围的操作员部署的应用程序。
+
+
+
+
+== 访问 Internet
+
+您应确定是否可以从外部访问 Internet 。否则，某些功能可能会受到限制，例如从 NetApp Cloud Insights 接收监控和指标数据或向 NetApp 支持站点发送支持包。
+
+
+
+== 许可证
+
+要实现全部功能， Astra 控制中心需要获得 Astra 控制中心许可证。从 NetApp 获取评估版许可证或完整许可证。如果没有许可证，您将无法：
+
+* 定义自定义应用程序
+* 为现有应用程序创建快照或克隆
+* 配置数据保护策略
+
+
+如果您要尝试使用 Astra 控制中心，可以 link:setup_overview.html#add-a-full-or-evaluation-license["使用 90 天评估许可证"]。
+
+
+
+== 内部 Kubernetes 集群的服务类型 "loadbalancer"
+
+Astra 控制中心使用类型为 "loadbalancer" 的服务（在 Astra 控制中心命名空间中为服务提供服务），并要求为其分配一个可访问的外部 IP 地址。对于内部 OpenShift 集群，您可以使用 https://docs.netapp.com/us-en/netapp-solutions/containers/rh-os-n_LB_MetalLB.html#installing-the-metallb-load-balancer["元 LB"^] 自动为服务分配外部 IP 地址。在内部 DNS 服务器配置中，您应将为 Astra 控制中心选择的 DNS 名称指向负载平衡的 IP 地址。
+
+
+
+== 网络要求
+
+托管 Astra 控制中心的集群使用以下 TCP 端口进行通信。您应确保允许这些端口通过任何防火墙，并将防火墙配置为允许来自 Astra 网络的任何 HTTPS 传出流量。某些端口要求在托管 Astra 控制中心的集群与每个受管集群之间建立双向连接（请在适用时注明）。
+
+|===
+| 产品 | Port | 协议 | 方向 | 目的 
+
+
+| Astra 控制中心 | 443. | HTTPS | 传入 | UI / API 访问 - 确保托管 Astra 控制中心的集群与每个受管集群之间的此端口是双向开放的 
+
+
+| Astra 控制中心 | 9090 | HTTPS  a| 
+* 入口（到托管 Astra 控制中心的集群）
+* 传出（来自每个受管集群中每个工作节点的节点 IP 地址的随机端口）
+
+| 指标数据到指标使用者 - 确保每个受管集群都可以访问托管 Astra 控制中心的集群上的此端口 
+
+
+| Trident | 34571 | HTTPS | 传入 | 节点 POD 通信 
+
+
+| Trident | 9220 | HTTP | 传入 | 指标端点 
+|===
+
+
+== 支持的 Web 浏览器
+
+Astra 控制中心支持最新版本的 Firefox ， Safari 和 Chrome ，最小分辨率为 1280 x 720 。
+
+
+
+== 下一步行动
+
+查看 link:quick-start.html["快速入门"] 概述。

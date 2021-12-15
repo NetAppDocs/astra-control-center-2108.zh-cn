@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: concepts/choose-class-and-size.html 
+keywords: service level, storage class, storage classes, pv size, persistent volume size, volume size, bandwidth, performance, persistent, volume, kubernetes, containers 
+summary: Astra 控制中心仅支持 ONTAP 存储支持的 Trident 存储类。您应了解存储类和永久性卷大小如何帮助您实现性能目标。 
+---
+= 存储类和永久性卷大小
+:hardbreaks:
+:icons: font
+:imagesdir: ../media/concepts/
+
+
+[role="lead"]
+Astra 控制中心支持使用 ONTAP 作为后端存储。您应了解存储类和永久性卷（ PV ）大小如何帮助您实现性能目标。
+
+
+
+== 概述
+
+目前， Astra 控制中心仅支持由 ONTAP 存储提供支持的 Trident 存储类。Astra 控制中心可发现并使用已部署的资源，包括 ONTAP ， Trident 和关联的存储类。
+
+
+NOTE: 应在 Astra 控制中心之外预先配置 Trident 存储类。
+
+
+
+== 存储类
+
+在将集群添加到 Astra 控制中心时，系统会提示您为永久性卷选择之前发现的存储类之一。存储类中的服务级别专为不同的容量和带宽需求而设计。这些已发现的存储类符合在 Astra 控制中心内使用的条件。
+
+
+
+== 永久性卷大小和性能
+
+请参见 Trident 信息，其中提供了成本比较以及一些示例，这些示例可帮助您更好地了解如何将服务级别与卷大小结合使用以满足性能目标。
+
+
+
+== 了解更多信息
+
+* https://netapp-trident.readthedocs.io/en/stable-v21.01/dag/kubernetes/storage_configuration_trident.html["有关存储配置的 Trident 文档"^]
+

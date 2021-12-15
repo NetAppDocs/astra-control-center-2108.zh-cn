@@ -1,0 +1,11 @@
+---
+section: release-notes
+title: 发行说明
+url: "/release-notes/rn_overview.html"
+entries:
+- title: 此版本的 Astra 控制中心包含哪些内容
+  url: "/release-notes/whats-new.html"
+- title: 此版本的已知问题
+  url: "/release-notes/known-issues.html"
+- title: 此版本的已知限制
+  url: "/release-notes/known-limitations.html"
