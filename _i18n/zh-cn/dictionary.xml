@@ -351,7 +351,6 @@
   <block id="609952cd5d8fde0dfe3b1b884bf14558" category="inline-link-macro">此版本的已知限制</block>
   <block id="9ce2124f29dc4cc07281ecd767336d13" category="list-text"><block ref="9ce2124f29dc4cc07281ecd767336d13" category="inline-link-macro-rx"></block></block>
   <block id="83d9b7618daad6df97a85360aa72e97b" category="summary">NetApp 会定期更新 Astra 控制中心，为您提供新功能，增强功能和错误修复。</block>
-  <block id="de141f3e77a2993cb920b587a7c1b45d" category="doc">此版本的 Astra 控制中心中的内容和 #8217</block>
   <block id="73a8897f031f2c6d2178d1c571c539d5" category="paragraph">我们很高兴地宣布发布 Astra 控制中心。</block>
   <block id="b179356a4d80ff3c8707972005712b2f" category="section-title">2021 年 8 月 5 日（ 21.08 ）</block>
   <block id="b4ed55b6796bb7f2d27743bd7ac1aa7d" category="paragraph">初始版本的 Astra 控制中心。</block>
@@ -1408,4 +1407,5 @@
   <block id="e462fefdff91aa001d8ce5bcc11f5f5f" category="sidebar">部署应用程序</block>
   <block id="be11c74c1dd7f307bb80183a90dc2067" category="sidebar">入门</block>
   <block id="1fe917b01f9a3f87fa2d7d3b7643fac1" category="sidebar">常见问题解答</block>
+  <block id="c6efe6a698bd6eb2bb99da1f491e52b8" category="doc">此版本的 Astra 控制中心包含哪些内容</block>
 </blocks>
