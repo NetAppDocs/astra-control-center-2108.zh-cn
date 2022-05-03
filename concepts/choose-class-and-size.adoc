@@ -6,6 +6,7 @@ summary: Astra 控制中心仅支持 ONTAP 存储支持的 Trident 存储类。�
 ---
 = 存储类和永久性卷大小
 :hardbreaks:
+:allow-uri-read: 
 :icons: font
 :imagesdir: ../media/concepts/
 
