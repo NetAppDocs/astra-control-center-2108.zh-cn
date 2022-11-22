@@ -14,10 +14,10 @@ summary: 安装 Astra 控制中心，登录到 UI 并更改密码后，您将需
 安装 Astra 控制中心，登录到 UI 并更改密码后，您将需要设置许可证，添加集群，管理存储以及添加存储分段。
 
 .任务
-* <<Add a license for Astra Control Center>>
-* <<Add cluster>>
-* <<Add a storage backend>>
-* <<Add a bucket>>
+*  a license for Astra Control Center
+*  cluster
+*  a storage backend
+*  a bucket
 
 
 
@@ -114,8 +114,8 @@ IMPORTANT: 添加要在 Astra 控制中心中管理的集群后，部署监控�
 
 您可以使用以下选项添加已发现的存储后端：
 
-* <<Add storage backend using Dashboard>>
-* <<Add storage backend using Backends option>>
+*  storage backend using Dashboard
+*  storage backend using Backends option
 
 
 
@@ -195,7 +195,7 @@ TIP: 存储分段名称和问题描述显示为备份位置，您可以稍后在
 
 NOTE: 创建的第一个存储分段不会显示此选项。
 
-.. 通过添加继续 <<Add S3 access credentials,凭据信息>>。
+.. 通过添加继续  S3 access credentials,凭据信息。
 
 
 

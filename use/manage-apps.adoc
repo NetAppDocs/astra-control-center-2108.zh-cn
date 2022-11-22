@@ -40,12 +40,12 @@ NOTE: 不支持使用 Helm 2 部署的应用程序。
 
 * 管理应用程序
 +
-** <<Manage apps by namespace>>
-** <<Manage apps by Kubernetes label>>
+**  apps by namespace
+**  apps by Kubernetes label
 
 
-* <<Ignore apps>>
-* <<Unmanage apps>>
+*  apps
+*  apps
 
 
 
