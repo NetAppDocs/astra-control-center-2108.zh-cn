@@ -27,7 +27,7 @@ oc get pods n -netapp-monitoring
 
 
 
-== 尽管集群和网络在其他方面按预期工作，但集群处于 "Removed" 状态
+== 集群位于中 `removed` 说明尽管集群和网络以其他方式正常运行
 
 如果集群处于 `removed` 状态，而集群和网络连接运行状况良好（外部尝试使用 Kubernetes API 访问集群成功），则您为 Astra Control 提供的 kubeconfig 可能不再有效。这可能是由于集群上的证书轮换或到期造成的。要更正此问题描述，请使用在 Astra Control 中更新与集群关联的凭据 link:https://docs.netapp.com/us-en/astra-automation-2108/index.html["Astra Control API"]：
 
@@ -87,7 +87,7 @@ Astra 控制中心不支持使用启用了操作员生命周期管理器（ OLM 
 
 
 
-== 未从集群中卸载 Trident
+== 未从集群中卸载Trident
 
 从 Astra 控制中心取消管理集群时， Trident 不会自动从集群中卸载。要卸载 Trident ，您需要 https://netapp-trident.readthedocs.io/en/latest/kubernetes/operations/tasks/managing.html#uninstalling-trident["请按照 Trident 文档中的以下步骤进行操作"^]。
 

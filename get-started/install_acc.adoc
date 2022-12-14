@@ -13,8 +13,8 @@ summary: 要在满足某些环境前提条件后安装 Astra 控制中心，您�
 
 要安装 Astra 控制中心，请执行以下步骤：
 
-*  Astra Control Center
-*  in to the Astra Control Center UI
+* <<安装 Astra 控制中心>>
+* <<登录到 Astra 控制中心 UI>>
 
 
 
@@ -23,7 +23,7 @@ summary: 要在满足某些环境前提条件后安装 Astra 控制中心，您�
 
 要安装 Astra 控制中心，请从 NetApp 支持站点下载安装包，并执行一系列命令在您的环境中安装 Astra 控制中心操作员和 Astra 控制中心。您可以使用此操作步骤在互联网连接或通风环境中安装 Astra 控制中心。
 
-.您需要什么？ #8217 ；将需要什么
+.您需要的内容
 * link:requirements.html["开始安装之前，请为 Astra Control Center 部署准备您的环境"]。
 * 在 OpenShift 集群中，确保所有集群操作员均处于运行状况良好的状态（`Available` is `true` ）：
 +
@@ -39,6 +39,7 @@ oc get apiservices
 ----
 
 
+.关于此任务
 Astra 控制中心安装过程将执行以下操作：
 
 * 将 Astra 组件安装到 `NetApp-Accc` （或自定义命名）命名空间中。
@@ -242,8 +243,8 @@ NOTE: 首次部署 Astra 控制中心后，无法更改 CR 配置的属性。
 +
 .. 将 ` Docker _registry_path]` 更改为上一步推送映像的注册表路径。
 .. 将 `accountName` 字符串更改为要与帐户关联的名称。
-.. 将 `astraAddress` 字符串更改为要在浏览器中使用的 FQDN 以访问 Astra 。请勿在此地址中使用 `http ： //` 或 `https ： //` 。复制此 FQDN 以在中使用  in to the Astra Control Center UI,后续步骤。
-.. 将 `email` 字符串更改为默认的初始管理员地址。复制此电子邮件地址以在中使用  in to the Astra Control Center UI,后续步骤。
+.. 将 `astraAddress` 字符串更改为要在浏览器中使用的 FQDN 以访问 Astra 。请勿在此地址中使用 `http ： //` 或 `https ： //` 。复制此 FQDN 以在中使用 <<登录到 Astra 控制中心 UI,后续步骤>>。
+.. 将 `email` 字符串更改为默认的初始管理员地址。复制此电子邮件地址以在中使用 <<登录到 Astra 控制中心 UI,后续步骤>>。
 .. 将 AutoSupport 的 `已注册` 更改为 `false` 对于无 Internet 连接的站点，或者将已连接站点的 `true` 保留。
 .. （可选）添加与帐户关联的用户的名字 `firstName` 和姓氏 `lastName` 。您可以在用户界面中立即或稍后执行此步骤。
 .. （可选）如果您的安装需要，请将 `storageClass` 值更改为另一个 Trident storageClass 资源。
@@ -466,13 +467,13 @@ metadata:
 安装完 Accc 后，您将更改默认管理员的密码并登录到 Accc UI 信息板。
 
 .步骤
-. 在浏览器中，输入在 `Astra_control_center_min.YAML` CR when 的 `AstraAddress` 中使用的 FQDN  Astra Control Center,您已安装了 Acc。
+. 在浏览器中，输入在 `Astra_control_center_min.YAML` CR when 的 `AstraAddress` 中使用的 FQDN <<安装 Astra 控制中心,您已安装了 Acc>>。
 . 出现提示时接受自签名证书。
 +
 
 NOTE: 您可以在登录后创建自定义证书。
 
-. 在 Astra Control Center 登录页面上，在 `Astra_control_center_min.yaml` CR when 中输入您用于 `email` 的值  Astra Control Center,您已安装了 Acc，后跟一次性密码（`Acc-UUID` ）。
+. 在 Astra Control Center 登录页面上，在 `Astra_control_center_min.yaml` CR when 中输入您用于 `email` 的值 <<安装 Astra 控制中心,您已安装了 Acc>>，后跟一次性密码（`Acc-UUID` ）。
 +
 
 NOTE: 如果您输入的密码三次不正确，管理员帐户将锁定 15 分钟。

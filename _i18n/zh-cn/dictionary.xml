@@ -317,14 +317,12 @@
   <block id="4fc8b8758715863e1a09b124319f8e9b" category="section-title">额外的备份会作为计划备份的一部分保留</block>
   <block id="24d522ed56286396130064a0fbfa76f1" category="inline-link">强制删除</block>
   <block id="dbc57eeb568c4f7aa06ae84684698ee2" category="paragraph">有时， Astra 控制中心中的一个或多个备份会保留到超出备份计划中指定保留的数量的位置。这些额外备份应作为计划备份的一部分删除，但不会删除，并且会停留在 `pending` 状态。要解决问题描述，<block ref="0f00fd869a264f948f8b24f6a8d62799" category="inline-link-rx"></block> 额外的备份。</block>
-  <block id="5b3294628def37531167489c5f2faf95" category="section-title">克隆操作不能使用默认值以外的其他分段</block>
   <block id="9f097dac85ac3ea6adc46bf130f734ac" category="inline-link-macro">更改存储分段默认值</block>
   <block id="402051f4be0cc3aad33bcf3ac3d6532b" category="inline-link-macro">backup</block>
   <block id="bb2ac0b8da1f64a3498af147ba43fc10" category="inline-link-macro">还原</block>
   <block id="7c922cc9c47040e49d8d572ed1a29f5b" category="paragraph">在应用程序备份或应用程序还原期间，您可以选择指定存储分段 ID 。但是，应用程序克隆操作始终使用已定义的默认分段。没有选项可用于更改克隆的分段。如果要控制使用哪个存储分段，您可以选择 <block ref="aefe6ea1b0b92dd65028296dfe305ad3" category="inline-link-macro-rx"></block> 或者执行 <block ref="5a0ced1a5e4eaf523ec6c8f1e4de7f81" category="inline-link-macro-rx"></block> 后跟 A <block ref="ade375e828882781f654729e54a482ee" category="inline-link-macro-rx"></block> 请单独使用。</block>
   <block id="36b09903bc03f599758bd10a012681dc" category="section-title">如果默认的 kubeconfig 文件包含多个上下文，则使用 Astra 控制中心管理集群将失败</block>
   <block id="c2ac98d7ceae8e47ff6c393623bd7c1e" category="paragraph">不能将 kubeconfig 与多个集群和上下文结合使用。请参见 <block ref="5c6ea7df10319b240eb35135a35a3cb5" category="inline-link-macro-rx"></block> 有关详细信息 ...</block>
-  <block id="d9ad9044513bb2a4324591a9e0425c85" category="section-title">无法确定扩展环境中的 ASUP tar 包状态</block>
   <block id="8dd229c6200bbf048b3b445da43b7c8a" category="paragraph">在 ASUP 收集期间， UI 中的捆绑包状态会报告为 `collecting` 或 `done` 。对于大型环境，收集可能需要长达一小时的时间。在 ASUP 下载期间，此捆绑包的网络文件传输速度可能不足，下载可能会在 15 分钟后超时，而 UI 中没有任何指示。下载问题取决于 ASUP 的大小，扩展的集群大小以及收集时间是否超过七天限制。</block>
   <block id="886724137bc7914c606d6d8869d43fdc" category="section-title">卸载 Astra 控制中心无法清理受管集群上的监控操作员 POD</block>
   <block id="bf4630e3d3e7f4201dd37b09622ec440" category="paragraph">如果在卸载 Astra Control Center 之前未取消管理集群，则可以使用以下命令手动删除 netapp-monitoring 命名空间和命名空间中的 Pod ：</block>
@@ -391,7 +389,6 @@
   <block id="1bca7607e51d744e7281a7c4772adc9f" category="inline-link-macro">取消管理集群</block>
   <block id="1f7a30a87f1e03ae9b4e5a75054aea44" category="paragraph">如果要管理另一个 Astra Control Center 实例上的集群，应首先进行管理 <block ref="db506b8ca3f9d6b67f586ae44373200f" category="inline-link-macro-rx"></block> 在另一个实例上管理之前，先从所管理的实例进行管理。从管理中删除集群后，执行以下命令以验证此集群是否未受管理：</block>
   <block id="df968f82e7fe0ad4aa9c7e7fa3f7746b" category="paragraph">此命名空间中不应运行任何 Pod ，或者此命名空间不应存在。如果其中任一项为 true ，则集群不受管理。</block>
-  <block id="015b7ce9577ab8215272b79fab0e4df6" category="section-title">尽管集群和网络在其他方面按预期工作，但集群处于 "Removed" 状态</block>
   <block id="d2345544e5b85f26908fbbfcea4178f8" category="inline-link-macro">Astra Control API</block>
   <block id="b39fb1c7e8ea55e359b3d7e09394e294" category="paragraph">如果集群处于 `removed` 状态，而集群和网络连接运行状况良好（外部尝试使用 Kubernetes API 访问集群成功），则您为 Astra Control 提供的 kubeconfig 可能不再有效。这可能是由于集群上的证书轮换或到期造成的。要更正此问题描述，请使用在 Astra Control 中更新与集群关联的凭据 <block ref="94f95e5c5cd8bdb2e8ee724483dff233" category="inline-link-macro-rx"></block>：</block>
   <block id="66edf4995b8868e964c7fcd7d02a19e0" category="list-text">运行 POST 调用，将更新后的 kubeconfig 文件添加到 ` 凭据` 端点，并从响应正文中检索分配的 `id` 。</block>
@@ -414,7 +411,6 @@
   <block id="6dd84389e57d1bd5301a28cd06213505" category="paragraph">如果受管应用程序中的 Pod 运行状况不正常，则 Astra Control 无法创建新的备份和克隆。</block>
   <block id="52613a0e2a34040faff2fa3713d61414" category="section-title">与 Postgres Pod 的现有连接导致故障</block>
   <block id="a3e438b957ae4a8b4731d63d2e88365f" category="paragraph">在 Postgres Pod 上执行操作时，不应直接在 Pod 中连接以使用 psql 命令。Astra Control 需要使用 psql 访问权限来冻结和解冻数据库。如果已建立连接，则快照，备份或克隆将失败。</block>
-  <block id="39feb634693572723a378befc20023aa" category="section-title">未从集群中卸载 Trident</block>
   <block id="185d9e7bb43f5673a0095e89e4b5cfc9" category="inline-link">请按照 Trident 文档中的以下步骤进行操作</block>
   <block id="e3fd2eaf4e2e3991f2fa94391b8121cb" category="paragraph">从 Astra 控制中心取消管理集群时， Trident 不会自动从集群中卸载。要卸载 Trident ，您需要<block ref="a3367f4bf1eb45533cb3cef3b2543411" category="inline-link-rx"></block>。</block>
   <block id="299722bd05bd376cc7b0c795d68d2265" category="summary">将用户添加到 Astra 控制中心系统，并删除不应再访问该系统的用户。</block>
@@ -445,14 +441,12 @@
   <block id="a11ca2c2dd5144bf630dd5eb29b7cc67" category="list-text">输入符合密码要求的密码。</block>
   <block id="57d4c802b66507e7e8b66d11f3a59a6f" category="list-text">再次输入密码进行确认。</block>
   <block id="3f0292f8eb45a8182fde5a39b52549f3" category="list-text">单击 * 更改密码 * 。</block>
-  <block id="90f1c6fc655d106b5040673f4fce5f99" category="section-title">重置其他用户的密码</block>
   <block id="777944860c5bbcdb1b4a4a0a593efb52" category="paragraph">如果您的帐户具有管理员或所有者角色权限，则可以重置其他用户帐户以及您自己的帐户的密码。重置密码时，您需要分配一个临时密码，用户必须在登录时更改此密码。</block>
   <block id="109438fb5a37882f518dc1879a8744ef" category="list-text">在 * 用户 * 选项卡中，为用户选择 * 状态 * 列中的下拉列表。</block>
   <block id="df429da64d721747277606b598df29c4" category="list-text">选择 * 重置密码 * 。</block>
   <block id="67873c21262ba112b2e21148d43428f5" category="list-text">输入符合密码要求的临时密码。</block>
   <block id="7d52685360edaccc999997fc87429251" category="admonition">用户下次登录时，系统将提示用户更改密码。</block>
   <block id="58157b0f09846d09af0f8df56174955b" category="list-text">单击 * 重置密码 * 。</block>
-  <block id="a3f6d57c07e3d951867e570c6f3e5028" category="section-title">更改用户的角色</block>
   <block id="24c0d48852d7cd070e2d6f992f4c74ab" category="paragraph">具有所有者角色的用户可以更改所有用户的角色，而具有管理员角色的用户可以更改具有管理员，成员或查看器角色的用户的角色。</block>
   <block id="bda2a6db69313c6436901a69dc87e01b" category="list-text">在 * 用户 * 选项卡中，选择用户 * 角色 * 列中的下拉列表。</block>
   <block id="d0c1232ab48786417ee79906f40da166" category="list-text">选择一个新角色，然后在出现提示时单击 * 更改角色 * 。</block>
@@ -961,8 +955,6 @@
   <block id="b75ca60736c6893f52a9d2f551270a1a" category="list-text">使用以下命令删除 Astra 控制中心操作员系统组件：</block>
   <block id="09722d284b5ee32968e0df627e09c55d" category="inline-link-macro">卸载的已知问题</block>
   <block id="59f23566b748f4ca524f9008bc7ad2be" category="list-text"><block ref="59f23566b748f4ca524f9008bc7ad2be" category="inline-link-macro-rx"></block></block>
-  <block id="c59ae8d7beeb519a23478ab048af482c" category="paragraph"><block ref="c59ae8d7beeb519a23478ab048af482c" category="inline-link-macro-rx"></block></block>
-  <block id="6f2ac1cf1da8ec34232c651d4bba0149" category="paragraph"><block ref="6f2ac1cf1da8ec34232c651d4bba0149" category="inline-link-macro-rx"></block></block>
   <block id="4e7c19d9b5fb3a3487e5f50808a83fa4" category="summary">Astra 控制中心仅支持 ONTAP 存储支持的 Trident 存储类。您应了解存储类和永久性卷大小如何帮助您实现性能目标。</block>
   <block id="1266a5a3fd194fe421f8d3d701b44de7" category="doc">存储类和永久性卷大小</block>
   <block id="a6add414343c90785a2d836fa595a0d4" category="paragraph">Astra 控制中心支持使用 ONTAP 作为后端存储。您应了解存储类和永久性卷（ PV ）大小如何帮助您实现性能目标。</block>
@@ -1120,7 +1112,6 @@
   <block id="5d7fba152c80f5fa7ccc3386b01488f7" category="cell">指标端点</block>
   <block id="f370975993dbb1e7c1e24af01ed7986c" category="section-title">支持的 Web 浏览器</block>
   <block id="5ee52824555f7e54b800612663b9f098" category="paragraph">Astra 控制中心支持最新版本的 Firefox ， Safari 和 Chrome ，最小分辨率为 1280 x 720 。</block>
-  <block id="0a20c90d5270bed19fcaf851778c663b" category="section-title">下一步行动</block>
   <block id="159b2efa467f3d1f53e7c16668353bf5" category="inline-link-macro">快速入门</block>
   <block id="77a7c94739d3e3b6a3c106162739bbcd" category="paragraph">查看 <block ref="4a78f9b7a1530228ea4c970be46c5b94" category="inline-link-macro-rx"></block> 概述。</block>
   <block id="254a18b3f13c4603a1e896ef9d067cab" category="summary">要在满足某些环境前提条件后安装 Astra 控制中心，您需要下载此软件包并按照所述步骤进行安装。</block>
@@ -1208,7 +1199,6 @@
   <block id="a9a11c7d000cd067981f61a0db579f74" category="summary">您应运行灵活性检查，以确保集群已准备好添加到 Astra 控制中心。</block>
   <block id="0ab8b406c4d5e3b8a7e5b402912b73fc" category="doc">添加集群的前提条件</block>
   <block id="84fccda9e18ab736ae1e33ef33ff8543" category="paragraph">在添加集群之前，应确保满足前提条件。您还应运行资格检查，以确保集群已准备好添加到 Astra 控制中心。</block>
-  <block id="32ce911ba9da44dfbcba79bbe607d8f0" category="section-title">添加集群之前需要满足的要求</block>
   <block id="ef80043bd2a86758eccc4f4343f62cd8" category="list-text">运行 OpenShift 4.6 或 4.7 的集群，其中包含由 ONTAP 9.5 或更高版本提供支持的 Trident StorageClasses 。</block>
   <block id="ef348e4f91a7ac009ad72205db7a3796" category="list-text">一个或多个工作节点，至少具有 1 GB RAM ，可用于运行遥测服务。</block>
   <block id="c7e3f27c8dc77edbffd0cfa507fc83a5" category="admonition">如果您计划将另一个 OpenShift 4.6 或 4.7 集群添加为托管计算资源，则应确保已启用 Trident 卷快照功能。请参见官方 Trident<block ref="c6f82b497fe4e47526fecae4253a69a5" category="inline-link-rx"></block> 使用 Trident 启用和测试卷快照。</block>
@@ -1240,7 +1230,6 @@
   <block id="c2e9276c18aefa5ab46cb1b3fc86b3bb" category="list-text">创建 `create-kubeconfig.sh` 文件。如果您在上一步中记下的令牌索引不是 0 ，请将以下脚本开头的 `token_index` 的值替换为正确的值。</block>
   <block id="7d164f3971b504d6203cf274cc77dd35" category="list-text">获取用于将其应用于 Kubernetes 集群的命令。</block>
   <block id="a2f929de0da027192d03a87b325f91cb" category="list-text">（ * 可选 * ）将 kubeconfig 重命名为集群的有意义名称。保护集群凭据。</block>
-  <block id="3f297ef15cde0668e93b35f2752fd4fd" category="section-title">下一步是什么？</block>
   <block id="fc114aea788191ed2996fd8985c43178" category="inline-link-macro">添加集群</block>
   <block id="23759bc94b07144c1f29be1aa88ae38b" category="paragraph">确认满足了这些前提条件后，您便已准备就绪 <block ref="32016b7cf9a8b0ff26699b2ef6e83930" category="inline-link-macro-rx"></block>。</block>
   <block id="b9de900e778a04b97c1bd7ec737d7ae9" category="list-text"><block ref="b9de900e778a04b97c1bd7ec737d7ae9" category="inline-link-rx"></block></block>
@@ -1249,20 +1238,17 @@
   <block id="15dd8f83e9a999edc6eae56c5aec726e" category="paragraph">此页面简要概述了开始使用 Astra 控制中心所需的步骤。每个步骤中的链接将转到一个页面，其中提供了更多详细信息。</block>
   <block id="b777e6ba4555d404b00c2436d03ae649" category="inline-link-macro">许可信息</block>
   <block id="dc9e569caa79effd430c7ea63ceff7be" category="paragraph">试用！如果您要试用 Astra Control Center ，可以使用 90 天评估许可证。请参见 <block ref="3d35b4f40b39e7d8200f90f9d624f8f4" category="inline-link-macro-rx"></block> 了解详细信息。</block>
-  <block id="4854d4c0301c6f34c76f1cb78057e09e" category="list-title">跨度 class="image&gt;&lt;img src=<block ref="0c3becc25d95e48b9ca863002a042824" category="inline-link-rx"></block> Alt-one"&gt;&lt;/span&gt; 查看 Kubernetes 集群要求</block>
   <block id="8a66a5ad22aef4e75d3ac4b3dc1791e7" category="list-text">Astra 可与具有 Trident 配置的 ONTAP 存储后端的 Kubernetes 集群结合使用。</block>
   <block id="0deb5023224ed4d71135e9bae6dff9d4" category="list-text">集群必须以运行状况良好的状态运行，并且至少有三个联机辅助节点。</block>
   <block id="5f08198ddd920cae8e4af705793b2a56" category="list-text">集群必须运行 Kubernetes 。</block>
   <block id="e34728b4f7a3f87b9d4e4bc0568096e1" category="inline-link-macro">了解有关 Astra 控制中心要求的更多信息</block>
   <block id="dc36d12219c1097713b63def4e923028" category="paragraph"><block ref="cb100f378703845999b4907e7c8315fb" category="inline-link-macro-rx"></block>。</block>
-  <block id="9384595b10ef347b2da67882c7b37bd7" category="list-title">跨度 class="image&gt;&lt;img src=<block ref="c9bdd0fd7d7224adcf67691b15f15281" category="inline-link-rx"></block> Alt-twe"&gt;&lt;/span&gt; 下载并安装 Astra 控制中心</block>
   <block id="1f013f19e75011210ca17bbd9cf6c443" category="list-text">从 NetApp 支持站点下载 Astra 控制中心。</block>
   <block id="276a11727deff1a1f5ebf349b23835fc" category="list-text">在本地环境中安装 Astra Control Center 。</block>
   <block id="111c233b1effa56ddf0f043c699a499d" category="list-text">了解由 ONTAP 存储后端提供支持的 Trident 配置。</block>
   <block id="4c4de1b50b600f81eec6bc5f9eafe8ca" category="paragraph">对于我们的第一个版本，您可以在 OpenShift 注册表上安装这些映像，也可以使用本地注册表。</block>
   <block id="4cb444388821c2b32d8c80c962e7f1c0" category="inline-link-macro">了解有关安装 Astra 控制中心的更多信息</block>
   <block id="868d347e9c5a5e26320992d6e87924f1" category="paragraph"><block ref="85d4e7b942cbd0c7d715ed76a5e5652f" category="inline-link-macro-rx"></block>。</block>
-  <block id="80de081c75779cda8e2db1de0f292684" category="list-title">跨度 class="image&gt;&lt;img src=<block ref="ddd753dc2858fe3a5582f20b300a0541" category="inline-link-rx"></block> Alt-Three &lt;/span&gt; 完成一些初始设置任务</block>
   <block id="f13e95a655fb97423bd52082209d8781" category="list-text">添加许可证</block>
   <block id="89a40ca78d4ff20ec6d54ba006768895" category="list-text">添加 Kubernetes 集群， Astra 控制中心将发现详细信息。</block>
   <block id="87d2ee45afe04a74320927b3cc97c4ef" category="list-text">添加 ONTAP 存储后端。</block>
@@ -1408,4 +1394,24 @@
   <block id="be11c74c1dd7f307bb80183a90dc2067" category="sidebar">入门</block>
   <block id="1fe917b01f9a3f87fa2d7d3b7643fac1" category="sidebar">常见问题解答</block>
   <block id="c6efe6a698bd6eb2bb99da1f491e52b8" category="doc">此版本的 Astra 控制中心包含哪些内容</block>
+  <block id="8eea62084ca7e541d918e823422bd82e" category="paragraph-title">结果</block>
+  <block id="06c2cea18679d64399783748fa367bdd" category="inline-image-macro">一个</block>
+  <block id="13a0d74de4f994f2861da351c22e5549" category="list-title"><block ref="58f667aaf05f87159670e12bd9bc076b" category="inline-image-macro-rx" type="image"></block> 查看 Kubernetes 集群要求</block>
+  <block id="aada29daee1d64ed0fe907043855cb7e" category="inline-image-macro">两个</block>
+  <block id="6e6d8bfff1b16149f8c62cfee0d2f62e" category="list-title"><block ref="54f425ce8d89f4ed6b8a546561af5d60" category="inline-image-macro-rx" type="image"></block> 下载并安装Astra控制中心</block>
+  <block id="ca8a2087e5557e317599344687a57391" category="inline-image-macro">三个</block>
+  <block id="ba9e9d1eb144bbf0eb66ffe3fb01e03a" category="list-title"><block ref="05b2444faffd66d76e88602ea7dd353f" category="inline-image-macro-rx" type="image"></block> 完成一些初始设置任务</block>
+  <block id="981b8fcee42e1e726a67a2b9a98ea6e9" category="inline-image-macro">四个</block>
+  <block id="9824425bd5418e5e140ee6b8561b8914" category="paragraph-title"><block ref="beadfa85a2fdca06b91edc1131c603e6" category="inline-image-macro-rx" type="image"></block> 使用 Astra 控制中心</block>
+  <block id="e5d9de39f7ca1ba2637e5640af3ae8aa" category="inline-image-macro">五个</block>
+  <block id="4e661ed0899ae91f577701320636fabf" category="paragraph-title"><block ref="99e8b2f00e172bfcff96afdce69907bc" category="inline-image-macro-rx" type="image"></block> 从此快速入门继续</block>
+  <block id="d59db7846bd10b6d60d21543df9faa9e" category="paragraph-title">您需要的内容</block>
+  <block id="58eaebf972358f1cf03d386a4ade1a0f" category="section-title">下一步是什么？</block>
+  <block id="01e12de62fa77fda2815719aed8ff892" category="section-title">下一步行动</block>
+  <block id="190b1d4301402be73ef9a56adefaf47b" category="section-title">添加集群之前需要满足的要求</block>
+  <block id="bbe48fb854ea022537208eeeff822f91" category="paragraph-title">关于此任务</block>
+  <block id="b0bec2358236d5d91345b1e9e0a81746" category="section-title">集群位于中<block ref="b07286ebbb5bc7aa91cc3eaa8bc19711" prefix=" " category="inline-code"></block> 说明尽管集群和网络以其他方式正常运行</block>
+  <block id="65d25f81ce4ac60dc17acfe9f1c44ce1" category="section-title">未从集群中卸载Trident</block>
+  <block id="53c5fac0ba78b08ca3f0a270b746c5d2" category="section-title">重置其他用户的密码</block>
+  <block id="edb74efc05972c268b6cccf83996ac3e" category="section-title">更改用户的角色</block>
 </blocks>
