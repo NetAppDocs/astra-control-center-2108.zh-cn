@@ -86,7 +86,6 @@
   <block id="90d397f2aa31c2e6d9f5dfda5d12adca" category="paragraph">Astra 控制中心在您自己的私有云中本地运行。</block>
   <block id="9b04dea5fba4d366b92ef41197eae5e2" category="paragraph">对于第一个版本， Astra 控制中心将支持 ONTAP 9.5 及更高版本的 OpenShift Kubernetes 集群和 Trident 存储后端。</block>
   <block id="51269e2584d26b04961877ec77db6da7" category="paragraph">在云互联环境中， Astra 控制中心使用 Cloud Insights 提供高级监控和遥测功能。如果没有 Cloud Insights 连接，则 Astra 控制中心可提供有限的（ 7 天的指标）监控和遥测功能，并通过开放式指标端点导出到 Kubernetes 原生监控工具（例如 Prometheus 和 Grafana ）。</block>
-  <block id="1bc8163319d46bff9915aa0226885a42" category="paragraph">Astra 控制中心完全集成到 AutoSupport 和 Active IQ 生态系统中，可为用户和 NetApp 支持提供故障排除和使用信息。</block>
   <block id="26849905a5aa23f71bc18ee28e352604" category="paragraph">您可以使用 90 天评估许可证试用 Astra Control Center 。评估版可通过电子邮件和社区（ Slack 通道）选项来支持。此外，您还可以从产品支持信息板访问知识库文章和文档。</block>
   <block id="b4851e92b19af0c5c82447fc0937709d" category="inline-link">要求</block>
   <block id="e63cc3795b9216d59b085bd3111a248d" category="paragraph">要安装和使用 Astra 控制中心，您需要满足特定的要求<block ref="bdde32b2c988689d803729c06660acb4" category="inline-link-rx"></block>。</block>
@@ -1420,4 +1419,5 @@
   <block id="2352c4e1f4d0024ade0869e00e6243f4" category="paragraph"><block ref="2352c4e1f4d0024ade0869e00e6243f4" category="inline-link-macro-rx"></block></block>
   <block id="931607e4df934f12f0a0d0323f739e8c" category="list-text"><block ref="46bdba95fad7359beee853f2ee144260" category="inline-link-macro-rx"></block>。</block>
   <block id="8c12e73d5653755d89cc3e42b0fa4b92" category="list-text"><block ref="8c12e73d5653755d89cc3e42b0fa4b92" category="inline-link-rx"></block></block>
+  <block id="4ffa5f8c75a25d5db0add99affd09af7" category="paragraph">Asta控制中心完全集成到AutoSupport和Active IQ数字顾问(也称为数字顾问)生态系统中、为用户和NetApp支持提供故障排除和使用信息。</block>
 </blocks>
